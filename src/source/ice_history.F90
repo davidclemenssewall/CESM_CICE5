@@ -1380,7 +1380,7 @@
               ns1, f_flwupn)
 
            call define_hist_field(n_fswabsn,"fswabsn","W m-2",tstr3Dc, tcstr, &
-              "snow/ice/ocn absorbed solar flux, categories",
+              "snow/ice/ocn absorbed solar flux, categories", &
               "positive downwards", c1, c0, &           
               ns1, f_fswabsn)
 
@@ -2771,8 +2771,8 @@
            enddo
            enddo
            enddo
-           call accum_hist_field(n_fswabsn-n2D, iblk, ncat_hist, worka3(:,:,:),
-                                 a3Dc)
+           call accum_hist_field(n_fswabsn-n2D, iblk, ncat_hist, &
+                                 worka3(:,:,:), a3Dc)
          endif
          if (f_flwupn   (1:1) /= 'x') &
              call accum_hist_field(n_flwupn-n2D, iblk, ncat_hist, &
