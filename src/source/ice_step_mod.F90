@@ -176,6 +176,7 @@
       use ice_flux, only: frzmlt, sst, Tf, strocnxT, strocnyT, rside, &
           meltsn, melttn, meltbn, congeln, snoicen, dsnown, uatm, vatm, &
           wind, rhoa, potT, Qa, zlvl, strax, stray, flatn, fsensn, fsurfn, fcondtopn, &
+          flwoutn, &
           flw, fsnow, fpond, sss, mlt_onset, frz_onset, faero_atm, faero_ocn, &
           fiso_atm, fiso_ocn, Qa_iso, Qref_iso, fiso_evap, fiso_rain, &
           frain, Tair, coszen, strairxT, strairyT, fsurf, fcondtop, fsens, &
@@ -224,7 +225,6 @@
       ! 2D coupler variables (computed for each category, then aggregated)
       real (kind=dbl_kind), dimension (nx_block,ny_block) :: &
          fswabsn     , & ! shortwave absorbed by ice          (W/m^2)
-         flwoutn     , & ! upward LW at surface               (W/m^2)
          evapn       , & ! flux of vapor, atmos to ice   (kg m-2 s-1)
          evapin      , & ! flux of vapor over ice   (kg m-2 s-1)
          evapsn      , & ! flux of vapor over snow   (kg m-2 s-1)
@@ -536,7 +536,7 @@
                                 fcondtopn(:,:,n,iblk),                    &
                                 fcondbotn(:,:,n,iblk),                    &
                                 fsensn(:,:,n,iblk),  flatn(:,:,n,iblk),   &
-                                flwoutn,                                  &
+                                flwoutn(:,:,n,iblk),                                  &
                                 evapn,                                    &
                                 evapin,              evapsn,              &
                                 freshn,              &
@@ -730,7 +730,7 @@
                             fsurfn(:,:,n,iblk), fcondtopn(:,:,n,iblk),&
                             fcondbotn(:,:,n,iblk),&
                             fsensn(:,:,n,iblk), flatn(:,:,n,iblk),    &
-                            fswabsn,            flwoutn,              &
+                            fswabsn,            flwoutn(:,:,n,iblk),  &
                             evapn,                                    &
                             evapin,             evapsn,               &
                             Trefn,              Qrefn,                &

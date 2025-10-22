@@ -292,6 +292,7 @@
            f_fswsfcn   = 'x',                     &
            f_fswintn   = 'x',                     &
            f_fswthrun  = 'x',                     &
+           f_flwupn    = 'x', f_fswabsn     = 'x',&
            f_trsig     = 'm', f_icepresent = 'm', &
            f_fsurf_ai  = 'm', f_fcondtop_ai= 'm', &
            f_fmeltt_ai = 'm',                     &
@@ -432,6 +433,7 @@
            f_fswsfcn,                &
            f_fswintn,                &
            f_fswthrun,               &
+           f_flwupn,    f_fswabsn   ,&
            f_trsig,     f_icepresent,&
            f_fsurf_ai,  f_fcondtop_ai,&
            f_fmeltt_ai, &
@@ -570,6 +572,7 @@
            n_fswsfcn,   &
            n_fswintn,   &
            n_fswthrun,   &
+           n_flwupn,      n_fswabsn    , &
            n_fhocn      , n_fhocn_ai   , &
            n_fswthru    , n_fswthru_ai , &
            n_strairx    , n_strairy    , &

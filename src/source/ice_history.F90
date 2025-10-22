@@ -440,6 +440,8 @@
       call broadcast_scalar (f_fswsfcn, master_task)
       call broadcast_scalar (f_fswintn, master_task)
       call broadcast_scalar (f_fswthrun, master_task)
+      call broadcast_scalar (f_flwupn, master_task)
+      call broadcast_scalar (f_fswabsn, master_task)
       call broadcast_scalar (f_trsig, master_task)
       call broadcast_scalar (f_icepresent, master_task)
       call broadcast_scalar (f_fsurf_ai, master_task)
@@ -1373,6 +1375,15 @@
               "penetrating shortwave, categories","none", c1, c0, &           
               ns1, f_fswthrun)
 
+           call define_hist_field(n_flwupn,"flwupn","W m-2",tstr3Dc, tcstr, &
+              "upward longwave flux, categories","none", c1, c0, &           
+              ns1, f_flwupn)
+
+           call define_hist_field(n_fswabsn,"fswabsn","W m-2",tstr3Dc, tcstr, &
+              "snow/ice/ocn absorbed solar flux, categories",
+              "positive downwards", c1, c0, &           
+              ns1, f_fswabsn)
+
            call define_hist_field(n_snowfracn,"snowfracn","1",tstr3Dc, tcstr, &
              "category mean snow fraction",                     &
              "snow fraction per unit grid cell area", c1, c0,       &
@@ -1633,6 +1644,7 @@
           fswthru_ai, strairx, strairy, strtltx, strtlty, strintx, strinty, &
           strocnx, strocny, fm, daidtt, dvidtt, daidtd, dvidtd, fsurf, &
           fcondtop, fsurfn, fcondtopn, flatn, fsensn, albcnt, prs_sig, &
+          flwoutn, &
           fcondbot, fcondbotn, update_ocn_f, &
           stressp_1, stressm_1, stress12_1, &
           stressp_2, stressm_2, stress12_2, &
@@ -2745,6 +2757,26 @@
          if (f_fswthrun   (1:1) /= 'x') &
              call accum_hist_field(n_fswthrun-n2D, iblk, ncat_hist, &
                                    fswthrun(:,:,1:ncat_hist,iblk), a3Dc)
+         if (f_fswabsn   (1:1) /= 'x') then
+           worka3(:,:,:) = c0
+           do n = 1,ncat_hist
+           do j = jlo, jhi
+           do i = ilo, ihi
+              if (aicen(i,j,n,iblk) > puny) then
+                 ! there is no fswabsn variable, but it should be the sum
+                 ! of the surface, internal, and transmitted shortwave
+                 worka3(i,j,n) = fswsfcn(i,j,n,iblk) + fswintn(i,j,n,iblk) &
+                                 + fswthrun(i,j,n,iblk)
+              endif
+           enddo
+           enddo
+           enddo
+           call accum_hist_field(n_fswabsn-n2D, iblk, ncat_hist, worka3(:,:,:),
+                                 a3Dc)
+         endif
+         if (f_flwupn   (1:1) /= 'x') &
+             call accum_hist_field(n_flwupn-n2D, iblk, ncat_hist, &
+                                   flwoutn(:,:,1:ncat_hist,iblk), a3Dc)
          if (f_snowfracn(1:1) /= 'x') &
              call accum_hist_field(n_snowfracn-n2D, iblk, ncat_hist, &
                                    snowfracn(:,:,1:ncat_hist,iblk), a3Dc)

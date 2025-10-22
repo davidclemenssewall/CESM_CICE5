@@ -325,7 +325,8 @@
          fcondtopn,& ! category fcondtop
          fcondbotn,& ! category fcondbot
          fsensn,   & ! category sensible heat flux
-         flatn       ! category latent heat flux
+         flatn,    & ! category latent heat flux
+         flwoutn     ! category outgoing longwave
 
       ! As above but these remain grid box mean values i.e. they are not
       ! divided by aice at end of ice_dynamics.  These are used in
@@ -657,6 +658,7 @@
       fcondbotn (:,:,:,:) = c0
       flatn     (:,:,:,:) = c0
       fsensn    (:,:,:,:) = c0
+      flwoutn   (:,:,:,:) = c0
       fpond     (:,:,:) = c0
       fresh_ai  (:,:,:) = c0
       fsalt_ai  (:,:,:) = c0
